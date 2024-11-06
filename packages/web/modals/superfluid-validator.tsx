@@ -258,7 +258,7 @@ export const SuperfluidValidatorModal: FunctionComponent<
           ) : (
             <table
               className={classNames(
-                "w-full bg-transparent",
+                "w-full bg-osmoverse-850 border-separate border-spacing-x-0 border-spacing-y-1",
                 isPreviousData &&
                   isLoadingValidators &&
                   "animate-[deepPulse_2s_ease-in-out_infinite] cursor-progress"
@@ -268,7 +268,7 @@ export const SuperfluidValidatorModal: FunctionComponent<
                 {table.getHeaderGroups().map((headerGroup) => (
                   <tr
                     key={headerGroup.id}
-                    className="!bg-osmoverse-800 top-0 !h-11"
+                    className="!bg-osmoverse-850 top-0 !h-11"
                   >
                     {headerGroup.headers.map((header) => (
                       <th key={header.id} colSpan={header.colSpan}>
@@ -304,19 +304,24 @@ export const SuperfluidValidatorModal: FunctionComponent<
                   return (
                     <tr
                       className={classNames(
-                        "!h-fit transition-colors",
-                        address === selectedValidatorAddress
-                          ? "border border-osmoverse-500"
-                          : isDelegated === 1
-                          ? "bg-osmoverse-800"
-                          : "bg-osmoverse-900",
-                        "hover:cursor-pointer hover:bg-osmoverse-850"
+                        "hover:cursor-pointer hover:bg-osmoverse-900",
+                        isDelegated === 1 && "bg-osmoverse-800",
+                        selectedValidatorAddress === address &&
+                          "bg-osmoverse-900"
                       )}
                       key={id}
                       onClick={() => setSelectedValidatorAddress(address)}
                     >
                       {rows[virtualRow.index].getVisibleCells().map((cell) => (
-                        <td key={cell.id}>
+                        <td
+                          key={cell.id}
+                          className={classNames(
+                            "first:rounded-l-7xl last:rounded-r-7xl",
+                            address === selectedValidatorAddress
+                              ? "border-y first:border-l last:border-r border-osmoverse-500"
+                              : ""
+                          )}
+                        >
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
